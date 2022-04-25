@@ -60,15 +60,14 @@ void Graph::addNode(string name) {
 	
 void Graph::resetVals() {
 	for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-		(*((*it).get())).setValue(Node::max_value);
-		// ^ Hoppas det finns bättre syntax för detta
+		(it->get()->setValue(Node::max_value);
 	}
 }
 
 Node* Graph::find(string input) {
 	for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-		if ((*(*it).get()).getName() == input) {
-			return (*it).get();
+		if (it->get()->getName() == input) {
+			return it->get();
 		}
 	}
 	return NULL;
