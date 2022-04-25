@@ -33,11 +33,11 @@ void Dijkstra::dijkstra(Node* start, Graph* g, int (*valueFunc)(Edge e1)) {
 		for (auto it = neighbours.begin(); it != neighbours.end(); ++it) { //Check the new distances
 			int newValue;
 			newValue = costMap[currentNode->getName()] + valueFunc((*it));
-			int oldValue = costMap[(*it).getDestination()->getName()];
+			int oldValue = costMap[it->getDestination()->getName()];
 			if (newValue < oldValue) {
-				costMap[(*it).getDestination()->getName()] = newValue;
-				(*it).getDestination()->setValue(newValue);
-				(*it).getDestination()->setParent(currentNode);
+				costMap[it->getDestination()->getName()] = newValue;
+				it->getDestination()->setValue(newValue);
+				it->getDestination()->setParent(currentNode);
 			}
 		}
 		visited.push_back(currentNode);
@@ -46,9 +46,9 @@ void Dijkstra::dijkstra(Node* start, Graph* g, int (*valueFunc)(Edge e1)) {
 	cout << endl << "Shortest paths to every node: " << endl;
 	
 	for (auto it = g->begin(); it != g->end(); ++it) {
-		cout << "Name: " << (*it).get()->getName() << " Value: " << (*it).get()->getValue() << endl;
+		cout << "Name: " << it->get()->getName() << " Value: " << it->get()->getValue() << endl;
 		vector<string> passes;
-		recursiveListAdder((*it).get(), &passes);
+		recursiveListAdder(it->get(), &passes);
 		for (auto it = passes.rbegin(); it != passes.rend(); ++it) {
 			cout << *it << " -> ";
 		}
@@ -71,9 +71,9 @@ void Dijkstra::addNeighbours(Node* node, std::map<std::string, int>* costMap, No
 			Only if it has never been seen in the graph before
 			//find(visited->begin(), visited->end(), *it) == visited->end()
 		*/
-			if (costMap->find((*it).getDestination()->getName()) == costMap->end()) {
-				unvisited->add((*it).getDestination());
-				costMap->insert(pair<string, int>((*it).getDestination()->getName(), INT_MAX));
+			if (costMap->find(it->getDestination()->getName()) == costMap->end()) {
+				unvisited->add(it->getDestination());
+				costMap->insert(pair<string, int>(it->getDestination()->getName(), INT_MAX));
 			}
 		}
 }
@@ -92,12 +92,12 @@ void Dijkstra::dijkstra_old(Node* start) {	//Dijkstra without a "Graph" or value
 		auto neighbours = currentNode->getEdges();
 		for (auto it = neighbours.begin(); it != neighbours.end(); ++it) { //Check the new distances
 			int newValue;
-			newValue = costMap[currentNode->getName()] + (*it).getLength(); //*it->getValue() funkar inte, måste kolla i costMap.
+			newValue = costMap[currentNode->getName()] + it->getLength(); //*it->getValue() funkar inte, måste kolla i costMap.
 			int oldValue = costMap[(*it).getDestination()->getName()];
 			if (newValue < oldValue) {
-				costMap[(*it).getDestination()->getName()] = newValue;
-				(*it).getDestination()->setValue(newValue);
-				(*it).getDestination()->setParent(currentNode);
+				costMap[it->getDestination()->getName()] = newValue;
+				it->getDestination()->setValue(newValue);
+				it->getDestination()->setParent(currentNode);
 			}
 		}
 		visited.push_back(currentNode);
@@ -117,8 +117,8 @@ void Dijkstra::addNeighbours_old(Node* node, std::map<string, int>* costMap, Nod
 			Only if it has never been seen in the graph before
 			//find(visited->begin(), visited->end(), *it) == visited->end()
 		*/
-			if (costMap->find((*it).getDestination()->getName()) == costMap->end()) {
-				unvisited->add((*it).getDestination());
+			if (costMap->find(it->getDestination()->getName()) == costMap->end()) {
+				unvisited->add(it->getDestination());
 				costMap->insert(pair<string, int>((*it).getDestination()->getName(), INT_MAX));
 			}
 		}
