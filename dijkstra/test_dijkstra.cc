@@ -92,7 +92,7 @@ void test_old()
         cout << endl;
     }
 #endif
-    cout << "Test for the old dijkstra passed" << endl;
+    cout << "Test for the non generalised dijkstra passed" << endl;
 }
 
 
